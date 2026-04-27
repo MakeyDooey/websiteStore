@@ -377,16 +377,20 @@
       transform: translateY(-2px);
     }
     .product-thumb {
-      height: 180px;
+      height: 200px;
       display: flex; align-items: center; justify-content: center;
       font-size: 3rem;
       position: relative;
       overflow: hidden;
+      background: #1a1a2e;
     }
-    .product-thumb.main-totem { background: linear-gradient(135deg, #1A1F3A 0%, #2D1B33 100%); }
+    .product-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
     .product-thumb.motor-totem { background: linear-gradient(135deg, #2D1B33 0%, #E8622A22 100%); }
-    .product-thumb.shamanlink { background: linear-gradient(135deg, #1a2a1a 0%, #2a3a1a 100%); }
-    .product-thumb.bundle { background: linear-gradient(135deg, #2a1a1a 0%, #E8622A33 100%); }
     .chip-badge {
       position: absolute; top: 16px; right: 16px;
       font-family: var(--ff-mono);
@@ -650,33 +654,7 @@
   <nav>
     <button class="nav-logo" onclick="showPage('home')">
       <div class="nav-logo-icon">
-        <svg viewBox="0 0 80 80" width="28" height="28" xmlns="http://www.w3.org/2000/svg">
-          <rect x="14" y="14" width="52" height="52" rx="10" fill="#EB7923"/>
-          <rect x="20" y="20" width="40" height="40" rx="7" fill="#2d0e4e"/>
-          <circle cx="40" cy="36" r="9" fill="#EB7923"/>
-          <circle cx="40" cy="36" r="5" fill="#2d0e4e"/>
-          <path d="M31 50 Q40 57 49 50" stroke="#EB7923" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <rect x="6"  y="23.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-          <rect x="66" y="23.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-          <rect x="6"  y="31.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-          <rect x="66" y="31.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-          <rect x="6"  y="39.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-          <rect x="66" y="39.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-          <rect x="6"  y="47.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-          <rect x="66" y="47.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-          <rect x="6"  y="55.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-          <rect x="66" y="55.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-          <rect x="23.5" y="6"  width="5" height="8" rx="1.5" fill="#EB7923"/>
-          <rect x="23.5" y="66" width="5" height="8" rx="1.5" fill="#EB7923"/>
-          <rect x="31.5" y="6"  width="5" height="8" rx="1.5" fill="#EB7923"/>
-          <rect x="31.5" y="66" width="5" height="8" rx="1.5" fill="#EB7923"/>
-          <rect x="39.5" y="6"  width="5" height="8" rx="1.5" fill="#EB7923"/>
-          <rect x="39.5" y="66" width="5" height="8" rx="1.5" fill="#EB7923"/>
-          <rect x="47.5" y="6"  width="5" height="8" rx="1.5" fill="#EB7923"/>
-          <rect x="47.5" y="66" width="5" height="8" rx="1.5" fill="#EB7923"/>
-          <rect x="55.5" y="6"  width="5" height="8" rx="1.5" fill="#EB7923"/>
-          <rect x="55.5" y="66" width="5" height="8" rx="1.5" fill="#EB7923"/>
-        </svg>
+        <img src="logo.png" alt="MakeyDooey" style="width:28px;height:28px;object-fit:contain;border-radius:6px;" />
       </div>
       MakeyDooey
     </button>
@@ -700,33 +678,7 @@
         <!-- Logo column -->
         <div class="hero-logo-col">
           <div class="hero-logo-box">
-            <svg viewBox="0 0 80 80" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-              <rect x="14" y="14" width="52" height="52" rx="10" fill="#EB7923"/>
-              <rect x="20" y="20" width="40" height="40" rx="7" fill="#2d0e4e"/>
-              <circle cx="40" cy="36" r="9" fill="#EB7923"/>
-              <circle cx="40" cy="36" r="5" fill="#2d0e4e"/>
-              <path d="M31 50 Q40 57 49 50" stroke="#EB7923" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-              <rect x="6"  y="23.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-              <rect x="66" y="23.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-              <rect x="6"  y="31.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-              <rect x="66" y="31.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-              <rect x="6"  y="39.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-              <rect x="66" y="39.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-              <rect x="6"  y="47.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-              <rect x="66" y="47.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-              <rect x="6"  y="55.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-              <rect x="66" y="55.5" width="8" height="5" rx="1.5" fill="#EB7923"/>
-              <rect x="23.5" y="6"  width="5" height="8" rx="1.5" fill="#EB7923"/>
-              <rect x="23.5" y="66" width="5" height="8" rx="1.5" fill="#EB7923"/>
-              <rect x="31.5" y="6"  width="5" height="8" rx="1.5" fill="#EB7923"/>
-              <rect x="31.5" y="66" width="5" height="8" rx="1.5" fill="#EB7923"/>
-              <rect x="39.5" y="6"  width="5" height="8" rx="1.5" fill="#EB7923"/>
-              <rect x="39.5" y="66" width="5" height="8" rx="1.5" fill="#EB7923"/>
-              <rect x="47.5" y="6"  width="5" height="8" rx="1.5" fill="#EB7923"/>
-              <rect x="47.5" y="66" width="5" height="8" rx="1.5" fill="#EB7923"/>
-              <rect x="55.5" y="6"  width="5" height="8" rx="1.5" fill="#EB7923"/>
-              <rect x="55.5" y="66" width="5" height="8" rx="1.5" fill="#EB7923"/>
-            </svg>
+            <img src="logo.png" alt="MakeyDooey" style="width:160px;height:160px;object-fit:contain;border-radius:16px;" />
           </div>
           <div class="hero-logo-wordmark">MakeyDooey</div>
         </div>
@@ -810,7 +762,7 @@
         <!-- Main Totem -->
         <div class="product-card">
           <div class="product-thumb main-totem">
-            🧠
+            <img src="mtl.png" alt="Main Totem board" />
             <span class="chip-badge">STM32H755</span>
             <span class="preorder-badge">Pre-order</span>
           </div>
@@ -862,7 +814,7 @@
         <!-- ShamanLink -->
         <div class="product-card">
           <div class="product-thumb shamanlink">
-            🔗
+            <img src="shamanlink.png" alt="ShamanLink PCB" />
             <span class="chip-badge">LPC55S69</span>
             <span class="preorder-badge">Pre-order</span>
           </div>
@@ -889,7 +841,7 @@
         <!-- Starter Bundle -->
         <div class="product-card">
           <div class="product-thumb bundle">
-            📦
+            <img src="showcaseBoards.png" alt="MakeyDooey Starter Bundle" />
             <span class="preorder-badge">Best Value</span>
           </div>
           <div class="product-body">
