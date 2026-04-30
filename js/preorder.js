@@ -1,91 +1,90 @@
-// js/supabase.js
-import { getCurrentProduct } from './modal.js';
+// js/preorder.js
+import { submitPreorder } from './supabase.js';
 
-const SUPABASE_URL = 'https://yvtefjnghtewgfyqynsb.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2dGVmam5naHRld2dmeXF5bnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MzE0NzEsImV4cCI6MjA5MDMwNzQ3MX0.nz8htbhDq_x5EHQv1mEGvuic7HZsU7N1M3kFaoDHPXU';
+const form = document.getElementById('preorder-form-element');
+const formError = document.getElementById('form-error');
+const submitBtn = document.querySelector('.form-submit');
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-export async function submitPreorder(formData) {
-  const { name, email, products, project, organization, useCase, newsletter } = formData;
-
-  if (!email) throw new Error('Email address is required');
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) throw new Error('Invalid email address');
-
-  const { data, error } = await supabase
-    .from('preorders')
-    .insert([{
-      name: name?.trim() || '',
-      email: email.toLowerCase().trim(),
-      products: products || ['General interest'],
-      project: project?.trim() || '',
-      organization: organization?.trim() || '',
-      use_case: useCase || '',
-      newsletter: newsletter || false,
-      status: 'pending'
-    }])
-    .select();
-
-  if (error) {
-    console.error('Supabase error:', error);
-    throw new Error(error.message);
+document.addEventListener('DOMContentLoaded', () => {
+  if (form) {
+    form.addEventListener('submit', handleFormSubmit);
   }
 
-  return { success: true, data };
+  const emailInput = document.getElementById('email');
+  if (emailInput) {
+    emailInput.addEventListener('blur', () => validateField(emailInput));
+    emailInput.addEventListener('input', () => {
+      if (emailInput.classList.contains('input-error')) validateField(emailInput);
+    });
+  }
+});
+
+function validateField(field) {
+  const errorMsg = field.parentElement.querySelector('.input-error-message');
+  let isValid = true;
+  field.classList.remove('input-error');
+  if (errorMsg) errorMsg.classList.remove('show');
+  if (field.hasAttribute('required') && !field.value.trim()) isValid = false;
+  if (field.type === 'email' && field.value) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) isValid = false;
+  }
+  if (!isValid) {
+    field.classList.add('input-error');
+    if (errorMsg) errorMsg.classList.add('show');
+  }
+  return isValid;
 }
 
-export async function submitProject(projectData) {
-  const { project } = projectData;
-  if (!project) throw new Error('Project description is required');
-
-  const { data, error } = await supabase
-    .from('projects')
-    .insert([{
-      project: project.trim(),
-      status: 'submitted'
-    }])
-    .select();
-
-  if (error) {
-    console.error('Supabase error:', error);
-    throw new Error(error.message);
-  }
-
-  return { success: true, data };
+function validateForm() {
+  const emailField = document.getElementById('email');
+  const email = emailField.value.trim();
+  if (!email) { showError('Email address is required'); return false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address'); return false; }
+  return true;
 }
 
-export async function handlePreorderSubmit() {
-  const name = document.getElementById('modal-name').value.trim();
-  const email = document.getElementById('modal-email').value.trim();
-  const product = getCurrentProduct();
+function showError(message) {
+  formError.textContent = message;
+  formError.classList.add('show');
+  formError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => formError.classList.remove('show'), 5000);
+}
 
-  if (!name || !email) {
-    alert('Please fill in both fields.');
-    return;
-  }
+function hideError() {
+  formError.classList.remove('show');
+}
 
-  const submitBtn = document.querySelector('.modal-submit');
+async function handleFormSubmit(e) {
+  e.preventDefault();
+  if (!validateForm()) return;
+  hideError();
+
+  const formData = new FormData(form);
+  const preorderData = {
+    name: `${formData.get('firstName')?.trim() || ''} ${formData.get('lastName')?.trim() || ''}`.trim(),
+    email: formData.get('email').trim().toLowerCase(),
+    products: ['General interest'],
+    project: formData.get('project')?.trim() || '',
+    organization: formData.get('organization')?.trim() || '',
+    useCase: formData.get('useCase') || '',
+    newsletter: document.getElementById('newsletter').checked,
+  };
+
   submitBtn.disabled = true;
   submitBtn.textContent = 'Submitting...';
 
   try {
-    await submitPreorder({ name, email, products: [product] });
-    document.getElementById('modal-body-form').style.display = 'none';
-    document.getElementById('modal-body-success').style.display = 'block';
+    await submitPreorder(preorderData);
+    showSuccess();
   } catch (error) {
     console.error('Pre-order submission error:', error);
-    document.getElementById('modal-body-form').style.display = 'none';
-    document.getElementById('modal-body-success').style.display = 'block';
+    showError(error.message || 'Failed to submit. Please try again.');
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Notify me when available';
+    submitBtn.textContent = 'Join Waitlist';
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const submitBtn = document.querySelector('.modal-submit');
-  if (submitBtn) {
-    submitBtn.addEventListener('click', handlePreorderSubmit);
-  }
-});
+function showSuccess() {
+  form.style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
