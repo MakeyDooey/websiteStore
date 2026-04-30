@@ -1,205 +1,91 @@
-// Pre-order page JavaScript
-import { submitPreorder } from './supabase.js';
+// js/supabase.js
+import { getCurrentProduct } from './modal.js';
 
-// Form elements
-const form = document.getElementById('preorder-form-element');
-const formError = document.getElementById('form-error');
-const formSuccess = document.getElementById('form-success');
-const submitBtn = document.querySelector('.form-submit');
+const SUPABASE_URL = 'https://yvtefjnghtewgfyqynsb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2dGVmam5naHRld2dmeXF5bnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MzE0NzEsImV4cCI6MjA5MDMwNzQ3MX0.nz8htbhDq_x5EHQv1mEGvuic7HZsU7N1M3kFaoDHPXU';
 
-// Product selection handling
-document.addEventListener('DOMContentLoaded', () => {
-  // Handle product option selection
-  const productOptions = document.querySelectorAll('.product-option');
-  productOptions.forEach(option => {
-    option.addEventListener('click', () => {
-      const checkbox = option.querySelector('input[type="checkbox"]');
-      checkbox.checked = !checkbox.checked;
-      
-      // Update visual state
-      if (checkbox.checked) {
-        option.classList.add('selected');
-      } else {
-        option.classList.remove('selected');
-      }
-    });
-    
-    // Handle checkbox change directly
-    const checkbox = option.querySelector('input[type="checkbox"]');
-    checkbox.addEventListener('change', () => {
-      if (checkbox.checked) {
-        option.classList.add('selected');
-      } else {
-        option.classList.remove('selected');
-      }
-    });
-  });
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // Handle form submission
-  if (form) {
-    form.addEventListener('submit', handleFormSubmit);
-  }
+export async function submitPreorder(formData) {
+  const { name, email, products, project, organization, useCase, newsletter } = formData;
 
-  // Only add real-time validation to email field
-  const emailInput = document.getElementById('email');
-  if (emailInput) {
-    emailInput.addEventListener('blur', () => {
-      if (emailInput.classList.contains('input-error') || !emailInput.value.trim()) {
-        validateField(emailInput);
-      }
-    });
-    
-    emailInput.addEventListener('input', () => {
-      if (emailInput.classList.contains('input-error')) {
-        validateField(emailInput);
-      }
-    });
-  }
-});
+  if (!email) throw new Error('Email address is required');
 
-function validateField(field) {
-  const errorMsg = field.parentElement.querySelector('.input-error-message');
-  let isValid = true;
-
-  // Remove previous error state
-  field.classList.remove('input-error');
-  if (errorMsg) errorMsg.classList.remove('show');
-
-  // Required field validation
-  if (field.hasAttribute('required') && !field.value.trim()) {
-    isValid = false;
-  }
-
-  // Email validation
-  if (field.type === 'email' && field.value) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(field.value)) {
-      isValid = false;
-    }
-  }
-
-  // Show error if invalid
-  if (!isValid) {
-    field.classList.add('input-error');
-    if (errorMsg) errorMsg.classList.add('show');
-  }
-
-  return isValid;
-}
-
-function validateForm() {
-  const emailField = document.getElementById('email');
-  const email = emailField.value.trim();
-  
-  // Check if email is empty
-  if (!email) {
-    showError('Email address is required');
-    return false;
-  }
-  
-  // Check if email is valid
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    showError('Please enter a valid email address');
-    return false;
+  if (!emailRegex.test(email)) throw new Error('Invalid email address');
+
+  const { data, error } = await supabase
+    .from('preorders')
+    .insert([{
+      name: name?.trim() || '',
+      email: email.toLowerCase().trim(),
+      products: products || ['General interest'],
+      project: project?.trim() || '',
+      organization: organization?.trim() || '',
+      use_case: useCase || '',
+      newsletter: newsletter || false,
+      status: 'pending'
+    }])
+    .select();
+
+  if (error) {
+    console.error('Supabase error:', error);
+    throw new Error(error.message);
   }
-  
-  return true;
+
+  return { success: true, data };
 }
 
-function showError(message) {
-  formError.textContent = message;
-  formError.classList.add('show');
-  
-  // Scroll to error
-  formError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  
-  // Hide error after 5 seconds
-  setTimeout(() => {
-    formError.classList.remove('show');
-  }, 5000);
+export async function submitProject(projectData) {
+  const { project } = projectData;
+  if (!project) throw new Error('Project description is required');
+
+  const { data, error } = await supabase
+    .from('projects')
+    .insert([{
+      project: project.trim(),
+      status: 'submitted'
+    }])
+    .select();
+
+  if (error) {
+    console.error('Supabase error:', error);
+    throw new Error(error.message);
+  }
+
+  return { success: true, data };
 }
 
-function hideError() {
-  formError.classList.remove('show');
-}
+export async function handlePreorderSubmit() {
+  const name = document.getElementById('modal-name').value.trim();
+  const email = document.getElementById('modal-email').value.trim();
+  const product = getCurrentProduct();
 
-async function handleFormSubmit(e) {
-  e.preventDefault();
-  
-  if (!validateForm()) {
+  if (!name || !email) {
+    alert('Please fill in both fields.');
     return;
   }
 
-  hideError();
-
-  // Get form data
-  const formData = new FormData(form);
-  
-  const preorderData = {
-    name: `${formData.get('firstName')?.trim() || ''} ${formData.get('lastName')?.trim() || ''}`.trim(),
-    email: formData.get('email').trim().toLowerCase(),
-    products: ['General interest'],
-    project: formData.get('project')?.trim() || '',
-    organization: formData.get('organization')?.trim() || '',
-    useCase: formData.get('useCase') || '',
-    newsletter: document.getElementById('newsletter').checked,
-    created_at: new Date().toISOString(),
-    status: 'pending'
-  };
-
-  // Show loading state
+  const submitBtn = document.querySelector('.modal-submit');
   submitBtn.disabled = true;
-  submitBtn.classList.add('loading');
   submitBtn.textContent = 'Submitting...';
 
   try {
-    // Submit to Supabase
-    await submitPreorder(preorderData);
-    
-    // Show success state
-    showSuccess();
-    
+    await submitPreorder({ name, email, products: [product] });
+    document.getElementById('modal-body-form').style.display = 'none';
+    document.getElementById('modal-body-success').style.display = 'block';
   } catch (error) {
     console.error('Pre-order submission error:', error);
-    showError(error.message || 'Failed to submit pre-order. Please try again.');
-    
-    // Reset button state
+    document.getElementById('modal-body-form').style.display = 'none';
+    document.getElementById('modal-body-success').style.display = 'block';
     submitBtn.disabled = false;
-    submitBtn.classList.remove('loading');
-    submitBtn.textContent = 'Join Waitlist';
+    submitBtn.textContent = 'Notify me when available';
   }
 }
 
-function showSuccess() {
-  // Hide form and show OK message
-  form.style.display = 'none';
-  
-  // Create OK message
-  const okMessage = document.createElement('div');
-  okMessage.className = 'ok-message';
-  okMessage.innerHTML = `
-    <div class="ok-checkmark">OK</div>
-    <p>Pre-order submitted successfully!</p>
-  `;
-  
-  // Insert OK message where form was
-  form.parentNode.insertBefore(okMessage, form.nextSibling);
-  
-  // Redirect to main page after 2 seconds
-  setTimeout(() => {
-    window.location.href = 'index.html';
-  }, 2000);
-  
-  // Track conversion (if you have analytics)
-  if (typeof gtag !== 'undefined') {
-    gtag('event', 'conversion', {
-      'event_category': 'Pre-order',
-      'event_label': 'Form Submitted'
-    });
+document.addEventListener('DOMContentLoaded', () => {
+  const submitBtn = document.querySelector('.modal-submit');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', handlePreorderSubmit);
   }
-}
-
-// Make some functions globally available for inline handlers
-window.showPreorderError = showError;
-window.hidePreorderError = hideError;
+});
