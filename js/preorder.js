@@ -40,16 +40,21 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', handleFormSubmit);
   }
 
-  // Real-time validation
-  const inputs = form.querySelectorAll('.form-input, .form-select');
-  inputs.forEach(input => {
-    input.addEventListener('blur', () => validateField(input));
-    input.addEventListener('input', () => {
-      if (input.classList.contains('input-error')) {
-        validateField(input);
+  // Only add real-time validation to email field
+  const emailInput = document.getElementById('email');
+  if (emailInput) {
+    emailInput.addEventListener('blur', () => {
+      if (emailInput.classList.contains('input-error') || !emailInput.value.trim()) {
+        validateField(emailInput);
       }
     });
-  });
+    
+    emailInput.addEventListener('input', () => {
+      if (emailInput.classList.contains('input-error')) {
+        validateField(emailInput);
+      }
+    });
+  }
 });
 
 function validateField(field) {
@@ -83,30 +88,23 @@ function validateField(field) {
 }
 
 function validateForm() {
-  let isValid = true;
-  const requiredFields = form.querySelectorAll('[required]');
+  const emailField = document.getElementById('email');
+  const email = emailField.value.trim();
   
-  requiredFields.forEach(field => {
-    if (!validateField(field)) {
-      isValid = false;
-    }
-  });
-
-  // Check if at least one product is selected
-  const selectedProducts = form.querySelectorAll('input[name="product"]:checked');
-  if (selectedProducts.length === 0) {
-    showError('Please select at least one product');
-    isValid = false;
+  // Check if email is empty
+  if (!email) {
+    showError('Email address is required');
+    return false;
   }
-
-  // Check if terms are accepted
-  const termsCheckbox = document.getElementById('terms');
-  if (!termsCheckbox.checked) {
-    showError('Please accept the terms of service');
-    isValid = false;
+  
+  // Check if email is valid
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    showError('Please enter a valid email address');
+    return false;
   }
-
-  return isValid;
+  
+  return true;
 }
 
 function showError(message) {
@@ -137,16 +135,14 @@ async function handleFormSubmit(e) {
 
   // Get form data
   const formData = new FormData(form);
-  const selectedProducts = Array.from(form.querySelectorAll('input[name="product"]:checked'))
-    .map(checkbox => checkbox.value);
   
   const preorderData = {
-    name: `${formData.get('firstName').trim()} ${formData.get('lastName').trim()}`,
+    name: `${formData.get('firstName')?.trim() || ''} ${formData.get('lastName')?.trim() || ''}`.trim(),
     email: formData.get('email').trim().toLowerCase(),
-    products: selectedProducts,
+    products: ['General interest'],
     project: formData.get('project')?.trim() || '',
     organization: formData.get('organization')?.trim() || '',
-    useCase: formData.get('useCase'),
+    useCase: formData.get('useCase') || '',
     newsletter: document.getElementById('newsletter').checked,
     created_at: new Date().toISOString(),
     status: 'pending'
@@ -176,12 +172,24 @@ async function handleFormSubmit(e) {
 }
 
 function showSuccess() {
-  // Hide form and show success message
+  // Hide form and show OK message
   form.style.display = 'none';
-  formSuccess.style.display = 'block';
   
-  // Scroll to success message
-  formSuccess.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Create OK message
+  const okMessage = document.createElement('div');
+  okMessage.className = 'ok-message';
+  okMessage.innerHTML = `
+    <div class="ok-checkmark">OK</div>
+    <p>Pre-order submitted successfully!</p>
+  `;
+  
+  // Insert OK message where form was
+  form.parentNode.insertBefore(okMessage, form.nextSibling);
+  
+  // Redirect to main page after 2 seconds
+  setTimeout(() => {
+    window.location.href = 'index.html';
+  }, 2000);
   
   // Track conversion (if you have analytics)
   if (typeof gtag !== 'undefined') {

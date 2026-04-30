@@ -59,67 +59,17 @@
 
       <div class="form-error" id="form-error"></div>
 
-      <form id="preorder-form-element" class="form-grid">
-        <!-- Product Selection -->
-        <div class="form-group full-width">
-          <label class="form-label">Select Products (Choose all that apply) <span class="required">*</span></label>
-          <div class="product-selection">
-            <label class="product-option">
-              <input type="checkbox" name="product" value="Main Totem" required />
-              <div class="product-option-header">
-                <div class="product-option-icon">></div>
-                <div class="product-option-title">Main Totem</div>
-              </div>
-              <div class="product-option-description">
-                The brain of the system. STM32H755 Nucleo with FreeRTOS and UART bus host.
-              </div>
-            </label>
-
-            <label class="product-option">
-              <input type="checkbox" name="product" value="Motor Totem" />
-              <div class="product-option-header">
-                <div class="product-option-icon">></div>
-                <div class="product-option-title">Motor Totem</div>
-              </div>
-              <div class="product-option-description">
-                Drive up to 5 NEMA17 stepper motors with TMC2209 drivers and stallguard.
-              </div>
-            </label>
-
-            <label class="product-option">
-              <input type="checkbox" name="product" value="ShamanLink" />
-              <div class="product-option-header">
-                <div class="product-option-icon">></div>
-                <div class="product-option-title">ShamanLink</div>
-              </div>
-              <div class="product-option-description">
-                USB-C to CMSIS-DAP bridge with SWD programming and CAN bus routing.
-              </div>
-            </label>
-
-            <label class="product-option">
-              <input type="checkbox" name="product" value="Starter Bundle" />
-              <div class="product-option-header">
-                <div class="product-option-icon">></div>
-                <div class="product-option-title">Starter Bundle</div>
-              </div>
-              <div class="product-option-description">
-                Everything you need: Main Totem, Motor Totem, ShamanLink, and USB-C cable.
-              </div>
-            </label>
-          </div>
-        </div>
-
+      <form id="preorder-form-element" class="form-grid" novalidate>
         <!-- Personal Information -->
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label" for="first-name">First Name <span class="required">*</span></label>
-            <input type="text" id="first-name" name="firstName" class="form-input" required />
+            <label class="form-label" for="first-name">First Name</label>
+            <input type="text" id="first-name" name="firstName" class="form-input" />
             <div class="input-error-message">Please enter your first name</div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="last-name">Last Name <span class="required">*</span></label>
-            <input type="text" id="last-name" name="lastName" class="form-input" required />
+            <label class="form-label" for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="lastName" class="form-input" />
             <div class="input-error-message">Please enter your last name</div>
           </div>
         </div>
@@ -143,8 +93,8 @@
             <input type="text" id="organization" name="organization" class="form-input" />
           </div>
           <div class="form-group">
-            <label class="form-label" for="use-case">Use Case <span class="required">*</span></label>
-            <select id="use-case" name="useCase" class="form-select" required>
+            <label class="form-label" for="use-case">Use Case</label>
+            <select id="use-case" name="useCase" class="form-select">
               <option value="">Select your use case</option>
               <option value="Education">Education</option>
               <option value="Research">Research</option>
@@ -161,9 +111,9 @@
         <!-- Terms and Privacy -->
         <div class="form-group full-width">
           <label class="checkbox-group">
-            <input type="checkbox" id="terms" name="terms" class="checkbox-input" required />
+            <input type="checkbox" id="terms" name="terms" class="checkbox-input" />
             <div class="checkbox-label">
-              I agree to the <a href="terms.html" onclick="window.open('terms.html', '_blank')" target="_blank">Terms of Service</a> and <a href="privacy.html" onclick="window.open('privacy.html', '_blank')" target="_blank">Privacy Policy</a>. I understand that this is a pre-order and I will be notified when pricing and availability are confirmed. <span class="required">*</span>
+              I agree to the <a href="terms.html" onclick="window.open('terms.html', '_blank')" target="_blank">Terms of Service</a> and <a href="privacy.html" onclick="window.open('privacy.html', '_blank')" target="_blank">Privacy Policy</a>. I understand that this is a pre-order and I will be notified when pricing and availability are confirmed.
             </div>
           </label>
         </div>

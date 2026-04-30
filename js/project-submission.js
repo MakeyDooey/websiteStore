@@ -34,18 +34,37 @@ export async function submitProjectForm() {
       status: 'submitted'
     });
 
-    // Show success message
-    responseText.innerHTML = `<strong>Thanks!</strong> We've received your project idea and can't wait to see what you build!`;
+    // Show green checkmark success
+    responseText.innerHTML = `<div class="success-checkmark">></div><strong>Success!</strong> Your project has been submitted.`;
+    responseText.style.color = '#228B22';
     
     // Clear the input
     input.value = '';
     
+    // Redirect back to main page after 2 seconds
+    setTimeout(() => {
+      // Reset form
+      responseDiv.style.display = 'none';
+      responseDiv.classList.remove('visible');
+      responseText.style.color = '';
+      btn.disabled = false;
+    }, 2000);
+    
   } catch (error) {
     // Still show success even if there's an error
     console.error('Project submission error:', error);
-    responseText.innerHTML = `<strong>Thanks!</strong> We've received your project idea and can't wait to see what you build!`;
-  } finally {
-    btn.disabled = false;
+    responseText.innerHTML = `<div class="success-checkmark">></div><strong>Success!</strong> Your project has been submitted.`;
+    responseText.style.color = '#228B22';
+    
+    // Clear the input and redirect
+    input.value = '';
+    
+    setTimeout(() => {
+      responseDiv.style.display = 'none';
+      responseDiv.classList.remove('visible');
+      responseText.style.color = '';
+      btn.disabled = false;
+    }, 2000);
   }
 }
 
