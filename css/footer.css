@@ -1,0 +1,32 @@
+/* Footer Styles */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px;
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  flex-wrap: wrap; 
+  gap: 16px;
+}
+
+.footer-logo {
+  font-family: var(--ff-head);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--charcoal);
+  display: flex; 
+  align-items: center; 
+  gap: 8px;
+}
+
+.footer-logo .dot { 
+  width: 7px; 
+  height: 7px; 
+  border-radius: 50%; 
+  background: var(--orange); 
+}
+
+footer p { 
+  font-size: 0.8rem; 
+  color: var(--muted); 
+}

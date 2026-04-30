@@ -3,671 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MakeyDooey — Build Without Limits</title>
+  <title>MakeyDooey - Build Without Limits</title>
+  <link rel="icon" type="image/png" href="assets/images/wike.png" />
+  
+  <!-- Preconnect to fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
-  <style>
-    /* ─── TOKENS ─────────────────────────────────────────────── */
-    :root {
-      --cream:      #F5F0E8;
-      --cream-dark: #EDE6D6;
-      --orange:     #E8622A;
-      --orange-dim: #C44E1E;
-      --aubergine:  #2D1B33;
-      --navy:       #1A1F3A;
-      --charcoal:   #2C2C2C;
-      --muted:      #7A6E62;
-      --border:     rgba(0,0,0,0.10);
-      --ff-head:    'Syne', sans-serif;
-      --ff-mono:    'DM Mono', monospace;
-      --ff-body:    'DM Sans', sans-serif;
-      --radius:     12px;
-      --nav-h:      64px;
-    }
-
-    /* ─── RESET ──────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--ff-body);
-      background: var(--cream);
-      color: var(--charcoal);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-    button { cursor: pointer; border: none; background: none; font: inherit; }
-    img { max-width: 100%; display: block; }
-
-    /* ─── NAV ────────────────────────────────────────────────── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: var(--nav-h);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 40px;
-      background: rgba(245,240,232,0.88);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: var(--ff-head);
-      font-size: 1.1rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: var(--charcoal);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .nav-logo-icon {
-      background: rgba(235,121,35,0.12);
-      border: 1.5px solid rgba(235,121,35,0.2);
-      border-radius: 10px;
-      padding: 4px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .hero-logo-box {
-      background: rgba(235,121,35,0.10);
-      border: 2px solid rgba(235,121,35,0.2);
-      border-radius: 28px;
-      padding: 20px;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 40px rgba(235,121,35,0.15);
-    }
-    .nav-links {
-      display: flex; align-items: center; gap: 8px;
-    }
-    .nav-links button {
-      font-family: var(--ff-body);
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 8px 16px;
-      border-radius: 8px;
-      color: var(--muted);
-      transition: color 0.15s, background 0.15s;
-    }
-    .nav-links button:hover { color: var(--charcoal); background: var(--cream-dark); }
-    .nav-links button.active { color: var(--orange); font-weight: 600; }
-    .nav-cta {
-      background: var(--orange) !important;
-      color: #fff !important;
-      padding: 8px 20px !important;
-      border-radius: 8px !important;
-      font-weight: 600 !important;
-      transition: background 0.15s !important;
-    }
-    .nav-cta:hover { background: var(--orange-dim) !important; }
-
-    /* ─── PAGE SYSTEM ────────────────────────────────────────── */
-    .page { display: none; padding-top: var(--nav-h); min-height: 100vh; }
-    .page.active { display: block; }
-
-    /* ─── HERO ───────────────────────────────────────────────── */
-    .hero {
-      position: relative;
-      padding: 80px 40px 80px;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(232,98,42,0.12) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(232,98,42,0.06) 0%, transparent 70%);
-    }
-    .hero-bg::after {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-    .hero-inner {
-      position: relative; z-index: 1;
-      max-width: 1100px;
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-    .hero-logo-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
-    .hero-logo-wordmark {
-      font-family: var(--ff-head);
-      font-size: 0.95rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      color: var(--charcoal);
-      text-align: center;
-    }
-    .hero-text-col { max-width: 560px; }
-    .hero-tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: var(--ff-mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      color: var(--orange);
-      background: rgba(232,98,42,0.10);
-      border: 1px solid rgba(232,98,42,0.25);
-      padding: 6px 14px;
-      border-radius: 100px;
-      margin-bottom: 28px;
-    }
-    .hero-tag::before {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--orange);
-      animation: blink 1.4s ease-in-out infinite;
-    }
-    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
-    .hero h1 {
-      font-family: var(--ff-head);
-      font-size: clamp(2.2rem, 4vw, 3.8rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      color: var(--charcoal);
-      margin-bottom: 20px;
-      max-width: 480px;
-    }
-    .hero h1 em {
-      font-style: normal;
-      color: var(--orange);
-    }
-    .hero p {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: var(--muted);
-      max-width: 480px;
-      margin-bottom: 40px;
-    }
-
-    /* ─── AI RECOMMENDER ─────────────────────────────────────── */
-    .recommender {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px;
-      max-width: 800px;
-      box-shadow: 0 4px 32px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
-    }
-    .recommender-label {
-      font-family: var(--ff-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-    .recommender-input-row {
-      display: flex; gap: 12px; align-items: flex-end;
-    }
-    .recommender textarea {
-      flex: 1;
-      font-family: var(--ff-body);
-      font-size: 1rem;
-      line-height: 1.6;
-      color: var(--charcoal);
-      background: var(--cream);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 20px;
-      resize: none;
-      min-height: 100px;
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    .recommender textarea::placeholder { color: #B0A89A; }
-    .recommender textarea:focus { border-color: var(--orange); }
-    .recommender-send {
-      flex-shrink: 0;
-      background: var(--orange);
-      color: #fff;
-      border-radius: 12px;
-      width: 52px; height: 52px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem;
-      transition: background 0.15s, transform 0.1s;
-      align-self: flex-end;
-    }
-    .recommender-send:hover { background: var(--orange-dim); transform: scale(1.04); }
-    .recommender-send:disabled { background: #ccc; transform: none; cursor: not-allowed; }
-    .recommender-response {
-      margin-top: 28px;
-      display: none;
-    }
-    .recommender-response.visible { display: block; }
-    .recommender-response-inner {
-      background: var(--cream);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px 28px;
-    }
-    .response-label {
-      font-family: var(--ff-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 14px;
-    }
-    .response-text {
-      font-size: 0.95rem;
-      line-height: 1.75;
-      color: var(--charcoal);
-      white-space: pre-wrap;
-    }
-    .response-text strong { color: var(--orange); font-weight: 600; }
-    .thinking {
-      display: flex; align-items: center; gap: 10px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-style: italic;
-    }
-    .thinking-dots span {
-      display: inline-block;
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--orange);
-      margin: 0 2px;
-      animation: bounce 1.2s ease-in-out infinite;
-    }
-    .thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
-    .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-6px)} }
-
-    /* ─── SECTION COMMONS ────────────────────────────────────── */
-    .section {
-      padding: 80px 40px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .section-tag {
-      font-family: var(--ff-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 12px;
-    }
-    .section h2 {
-      font-family: var(--ff-head);
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      color: var(--charcoal);
-      margin-bottom: 16px;
-    }
-    .section-sub {
-      font-size: 1rem;
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 520px;
-      margin-bottom: 48px;
-    }
-    hr.divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 0;
-    }
-
-    /* ─── HOW IT WORKS ───────────────────────────────────────── */
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-      margin-top: 48px;
-    }
-    .step {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px 28px;
-    }
-    .step-num {
-      font-family: var(--ff-mono);
-      font-size: 0.75rem;
-      color: var(--orange);
-      font-weight: 500;
-      margin-bottom: 16px;
-    }
-    .step h3 {
-      font-family: var(--ff-head);
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .step p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
-
-    /* ─── PURCHASING PAGE ────────────────────────────────────── */
-    .page-hero {
-      padding: 80px 40px 40px;
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(to bottom, var(--cream-dark), var(--cream));
-    }
-    .page-hero h1 {
-      font-family: var(--ff-head);
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      max-width: 500px;
-      margin-bottom: 16px;
-    }
-    .page-hero p { color: var(--muted); max-width: 460px; line-height: 1.7; font-size: 0.95rem; }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 24px;
-    }
-    .product-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex; flex-direction: column;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .product-card:hover {
-      box-shadow: 0 8px 40px rgba(0,0,0,0.10);
-      transform: translateY(-2px);
-    }
-    .product-thumb {
-      height: 200px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 3rem;
-      position: relative;
-      overflow: hidden;
-      background: #1a1a2e;
-    }
-    .product-thumb img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-    .product-thumb.motor-totem { background: linear-gradient(135deg, #2D1B33 0%, #E8622A22 100%); }
-    .chip-badge {
-      position: absolute; top: 16px; right: 16px;
-      font-family: var(--ff-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.85);
-      border: 1px solid rgba(255,255,255,0.18);
-      padding: 4px 10px;
-      border-radius: 100px;
-    }
-    .preorder-badge {
-      position: absolute; top: 16px; left: 16px;
-      font-family: var(--ff-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      background: var(--orange);
-      color: #fff;
-      padding: 4px 10px;
-      border-radius: 100px;
-    }
-    .product-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
-    .product-body h3 {
-      font-family: var(--ff-head);
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .product-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; margin-bottom: 16px; flex: 1; }
-    .product-specs {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      margin-bottom: 20px;
-    }
-    .spec-pill {
-      font-family: var(--ff-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.05em;
-      background: var(--cream);
-      border: 1px solid var(--border);
-      color: var(--charcoal);
-      padding: 4px 10px;
-      border-radius: 100px;
-    }
-    .product-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
-    .product-price {
-      font-family: var(--ff-head);
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--charcoal);
-    }
-    .product-price .price-sub { font-size: 0.75rem; font-weight: 400; color: var(--muted); display: block; margin-top: 2px; font-family: var(--ff-body); }
-    .btn-preorder {
-      background: var(--orange);
-      color: #fff;
-      font-family: var(--ff-body);
-      font-size: 0.875rem;
-      font-weight: 600;
-      padding: 10px 20px;
-      border-radius: 10px;
-      transition: background 0.15s;
-    }
-    .btn-preorder:hover { background: var(--orange-dim); }
-
-    /* ─── PREORDER MODAL ─────────────────────────────────────── */
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 200;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(4px);
-      display: none;
-      align-items: center; justify-content: center;
-      padding: 20px;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal {
-      background: var(--cream);
-      border-radius: 20px;
-      padding: 40px;
-      max-width: 440px;
-      width: 100%;
-      position: relative;
-      animation: modal-in 0.2s ease;
-    }
-    @keyframes modal-in { from { opacity:0; transform:scale(0.95) translateY(10px); } to { opacity:1; transform:none; } }
-    .modal-close {
-      position: absolute; top: 16px; right: 16px;
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: var(--cream-dark);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
-      color: var(--muted);
-      transition: background 0.15s;
-    }
-    .modal-close:hover { background: var(--border); }
-    .modal h3 {
-      font-family: var(--ff-head);
-      font-size: 1.4rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-    .modal p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; margin-bottom: 24px; }
-    .modal-field { margin-bottom: 16px; }
-    .modal-field label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--charcoal);
-      margin-bottom: 6px;
-    }
-    .modal-field input {
-      width: 100%;
-      font-family: var(--ff-body);
-      font-size: 0.95rem;
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      outline: none;
-      transition: border-color 0.15s;
-      color: var(--charcoal);
-    }
-    .modal-field input:focus { border-color: var(--orange); }
-    .modal-submit {
-      width: 100%;
-      background: var(--orange);
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-      padding: 14px;
-      border-radius: 12px;
-      transition: background 0.15s;
-      margin-top: 8px;
-    }
-    .modal-submit:hover { background: var(--orange-dim); }
-    .modal-success { text-align: center; padding: 20px 0; }
-    .modal-success .checkmark { font-size: 2.5rem; margin-bottom: 16px; }
-    .modal-success h3 { margin-bottom: 8px; }
-
-    /* ─── CONTACT PAGE ───────────────────────────────────────── */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-    .contact-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px 28px;
-      display: flex; flex-direction: column; gap: 16px;
-      transition: box-shadow 0.2s;
-    }
-    .contact-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
-    .contact-icon {
-      width: 48px; height: 48px;
-      border-radius: 12px;
-      background: rgba(232,98,42,0.10);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
-    }
-    .contact-card h3 {
-      font-family: var(--ff-head);
-      font-size: 1rem;
-      font-weight: 700;
-    }
-    .contact-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
-    .contact-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--orange);
-      transition: gap 0.15s;
-    }
-    .contact-link:hover { gap: 10px; }
-
-    /* ─── RESOURCES PAGE ─────────────────────────────────────── */
-    .resources-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .resource-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px 28px;
-      display: flex; flex-direction: column; gap: 12px;
-      transition: box-shadow 0.2s, transform 0.2s;
-      cursor: pointer;
-    }
-    .resource-card:hover {
-      box-shadow: 0 6px 32px rgba(0,0,0,0.09);
-      transform: translateY(-2px);
-    }
-    .resource-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
-    }
-    .resource-icon.orange { background: rgba(232,98,42,0.12); }
-    .resource-icon.navy { background: rgba(26,31,58,0.08); }
-    .resource-icon.green { background: rgba(34,139,34,0.08); }
-    .resource-card h3 {
-      font-family: var(--ff-head);
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
-    .resource-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; flex: 1; }
-    .resource-cta {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--orange);
-      margin-top: 4px;
-    }
-
-    /* ─── FOOTER ─────────────────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 16px;
-    }
-    .footer-logo {
-      font-family: var(--ff-head);
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--charcoal);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .footer-logo .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
-    footer p { font-size: 0.8rem; color: var(--muted); }
-
-    /* ─── RESPONSIVE ─────────────────────────────────────────── */
-    @media (max-width: 640px) {
-      nav { padding: 0 20px; }
-      .nav-links button:not(.nav-cta) { display: none; }
-      .hero { padding: 40px 20px 60px; }
-      .hero-inner { grid-template-columns: 1fr; gap: 32px; }
-      .hero-logo-col { flex-direction: row; justify-content: flex-start; }
-      .hero-logo-col img { width: 80px; border-radius: 16px; }
-      .recommender { padding: 24px; }
-      .recommender-input-row { flex-direction: column; }
-      .recommender-send { width: 100%; height: 48px; }
-      .section { padding: 60px 20px; }
-      .page-hero { padding: 60px 20px 40px; }
-      footer { padding: 24px 20px; }
-    }
-  </style>
+  
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/navigation.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/recommender.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/shop.css" />
+  <link rel="stylesheet" href="css/modal.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- ═══ NAV ════════════════════════════════════════════════ -->
+  <!-- Navigation -->
   <nav>
-    <button class="nav-logo" onclick="showPage('home')">
+    <button class="nav-logo">
       <div class="nav-logo-icon">
-        <img src="logo.png" alt="MakeyDooey" style="width:28px;height:28px;object-fit:contain;border-radius:6px;" />
+        <img src="assets/images/logo.png" alt="MakeyDooey" style="width:28px;height:28px;object-fit:contain;border-radius:6px;" />
       </div>
       MakeyDooey
     </button>
     <div class="nav-links">
-      <button onclick="showPage('home')" id="nav-home" class="active">Home</button>
-      <button onclick="showPage('shop')" id="nav-shop">Shop</button>
-      <button onclick="showPage('resources')" id="nav-resources">Resources</button>
-      <button onclick="showPage('contact')" id="nav-contact">Contact</button>
-      <button class="nav-cta" onclick="showPage('shop')">Pre-order</button>
+      <button data-page="home" id="nav-home" class="active">Home</button>
+      <button data-page="shop" id="nav-shop">Shop</button>
+      <button data-page="resources" id="nav-resources">Resources</button>
+      <button data-page="contact" id="nav-contact">Contact</button>
+      <button class="nav-cta" onclick="window.location.href='preorder.html'">Pre-order</button>
     </div>
   </nav>
 
-  <!-- ═══ HOME PAGE ══════════════════════════════════════════ -->
+  <!-- Home Page -->
   <div class="page active" id="page-home">
 
     <!-- Hero -->
@@ -678,7 +57,7 @@
         <!-- Logo column -->
         <div class="hero-logo-col">
           <div class="hero-logo-box">
-            <img src="logo.png" alt="MakeyDooey" style="width:160px;height:160px;object-fit:contain;border-radius:16px;" />
+            <img src="assets/images/logo.png" alt="MakeyDooey" style="width:160px;height:160px;object-fit:contain;border-radius:16px;" />
           </div>
           <div class="hero-logo-wordmark">MakeyDooey</div>
         </div>
@@ -687,24 +66,24 @@
         <div class="hero-text-col">
           <div class="hero-tag">Now accepting pre-orders</div>
           <h1>Build <em>anything.</em><br>From the browser.</h1>
-          <p>MakeyDooey is a modular embedded hardware platform with a browser-based IDE. Describe your project below and our AI will tell you exactly what you need to build it.</p>
+          <p>MakeyDooey is a modular embedded hardware platform with a browser-based IDE. Share your project with us and we'll help you bring your ideas to life.</p>
 
-          <!-- AI Recommender -->
+          <!-- Project Submission -->
           <div class="recommender">
-            <div class="recommender-label">// project idea → hardware recommendation</div>
+            <div class="recommender-label">// share your project with us</div>
             <div class="recommender-input-row">
               <textarea
-                id="idea-input"
-                placeholder="e.g. I want to build a robotic arm that can pick up objects and be controlled from my phone..."
+                id="project-input"
+                placeholder="Tell us about your project! We'd love to hear what you're building with MakeyDooey..."
                 rows="3"
               ></textarea>
-              <button class="recommender-send" id="send-btn" onclick="getRecommendation()" title="Get recommendation">
-                ➜
+              <button class="recommender-send" id="send-btn" title="Send project">
+                ->
               </button>
             </div>
             <div class="recommender-response" id="recommender-response">
               <div class="recommender-response-inner">
-                <div class="response-label">// MakeyDooey AI · Hardware Recommendation</div>
+                <div class="response-label">// Project Submitted</div>
                 <div class="response-text" id="response-text"></div>
               </div>
             </div>
@@ -730,7 +109,7 @@
         <div class="step">
           <div class="step-num">02 /</div>
           <h3>Pre-order your totems</h3>
-          <p>Order the recommended totem boards. Modular by design — start with one and expand your system as the project grows.</p>
+          <p>Order the recommended totem boards. Modular by design - start with one and expand your system as the project grows.</p>
         </div>
         <div class="step">
           <div class="step-num">03 /</div>
@@ -740,14 +119,14 @@
         <div class="step">
           <div class="step-num">04 /</div>
           <h3>Flash, monitor, control</h3>
-          <p>Write and flash firmware, monitor serial output, and control your hardware — all from one browser tab.</p>
+          <p>Write and flash firmware, monitor serial output, and control your hardware - all from one browser tab.</p>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- ═══ SHOP PAGE ══════════════════════════════════════════ -->
+  <!-- Shop Page -->
   <div class="page" id="page-shop">
 
     <div class="page-hero">
@@ -762,7 +141,7 @@
         <!-- Main Totem -->
         <div class="product-card">
           <div class="product-thumb main-totem">
-            <img src="mtl.png" alt="Main Totem board" />
+            <img src="assets/images/mtl.png" alt="Main Totem board" />
             <span class="chip-badge">STM32H755</span>
             <span class="preorder-badge">Pre-order</span>
           </div>
@@ -780,7 +159,7 @@
                 TBD
                 <span class="price-sub">Pricing coming soon</span>
               </div>
-              <button class="btn-preorder" onclick="openModal('Main Totem')">Notify Me</button>
+              <button class="btn-preorder" data-product="Main Totem">Notify Me</button>
             </div>
           </div>
         </div>
@@ -788,7 +167,7 @@
         <!-- Motor Totem -->
         <div class="product-card">
           <div class="product-thumb motor-totem">
-            ⚙️
+            >
             <span class="chip-badge">ESP32-S3</span>
             <span class="preorder-badge">Pre-order</span>
           </div>
@@ -806,7 +185,7 @@
                 TBD
                 <span class="price-sub">Pricing coming soon</span>
               </div>
-              <button class="btn-preorder" onclick="openModal('Motor Totem')">Notify Me</button>
+              <button class="btn-preorder" data-product="Motor Totem">Notify Me</button>
             </div>
           </div>
         </div>
@@ -814,7 +193,7 @@
         <!-- ShamanLink -->
         <div class="product-card">
           <div class="product-thumb shamanlink">
-            <img src="shamanlink.png" alt="ShamanLink PCB" />
+            <img src="assets/images/shamanlink.png" alt="ShamanLink PCB" />
             <span class="chip-badge">LPC55S69</span>
             <span class="preorder-badge">Pre-order</span>
           </div>
@@ -833,7 +212,7 @@
                 TBD
                 <span class="price-sub">Pricing coming soon</span>
               </div>
-              <button class="btn-preorder" onclick="openModal('ShamanLink')">Notify Me</button>
+              <button class="btn-preorder" data-product="ShamanLink">Notify Me</button>
             </div>
           </div>
         </div>
@@ -841,7 +220,7 @@
         <!-- Starter Bundle -->
         <div class="product-card">
           <div class="product-thumb bundle">
-            <img src="showcaseBoards.png" alt="MakeyDooey Starter Bundle" />
+            <img src="assets/images/showcaseBoards.png" alt="MakeyDooey Starter Bundle" />
             <span class="preorder-badge">Best Value</span>
           </div>
           <div class="product-body">
@@ -858,7 +237,7 @@
                 TBD
                 <span class="price-sub">Bundle pricing TBD</span>
               </div>
-              <button class="btn-preorder" onclick="openModal('Starter Bundle')">Notify Me</button>
+              <button class="btn-preorder" data-product="Starter Bundle">Notify Me</button>
             </div>
           </div>
         </div>
@@ -867,65 +246,65 @@
     </div>
   </div>
 
-  <!-- ═══ RESOURCES PAGE ════════════════════════════════════ -->
+  <!-- Resources Page -->
   <div class="page" id="page-resources">
 
     <div class="page-hero">
       <div class="section-tag">// documentation & tools</div>
       <h1>Resources</h1>
-      <p>Everything you need to start building with MakeyDooey — from the browser-based IDE to datasheets and source code.</p>
+      <p>Everything you need to start building with MakeyDooey - from the browser-based IDE to datasheets and source code.</p>
     </div>
 
     <div class="section">
       <div class="resources-grid">
 
         <div class="resource-card" onclick="window.open('https://makeydooey.github.io/Software','_blank')">
-          <div class="resource-icon orange">🖥️</div>
+          <div class="resource-icon orange">></div>
           <h3>MakeyDooey PWA IDE</h3>
-          <p>Open the browser-based IDE. Flash firmware, monitor serial output, and control your hardware — no installation required. Chrome or Edge recommended.</p>
-          <span class="resource-cta">Open IDE →</span>
+          <p>Open the browser-based IDE. Flash firmware, monitor serial output, and control your hardware - no installation required. Chrome or Edge recommended.</p>
+          <span class="resource-cta">Open IDE ></span>
         </div>
 
         <div class="resource-card" onclick="window.open('https://github.com/MakeyDooey/Software','_blank')">
-          <div class="resource-icon navy">🐙</div>
+          <div class="resource-icon navy">></div>
           <h3>GitHub Repository</h3>
           <p>Browse the full source code for the PWA IDE, firmware examples, and hardware schematics. Issues and contributions welcome.</p>
-          <span class="resource-cta">View on GitHub →</span>
+          <span class="resource-cta">View on GitHub ></span>
         </div>
 
         <div class="resource-card" id="datasheet-card">
-          <div class="resource-icon green">📄</div>
+          <div class="resource-icon green">></div>
           <h3>Hardware Datasheets</h3>
           <p>Technical specifications and pin diagrams for the Main Totem, Motor Totem, and ShamanLink PCB. Updated as hardware revisions ship.</p>
           <span class="resource-cta" id="datasheet-status">Coming soon</span>
         </div>
 
         <div class="resource-card" id="manual-card">
-          <div class="resource-icon orange">📖</div>
+          <div class="resource-icon orange">></div>
           <h3>User Manual</h3>
           <p>Step-by-step guide covering hardware setup, firmware flashing, serial monitoring, block sequencer, and Motor Totem control via BenjiPanel.</p>
           <span class="resource-cta" id="manual-status">Coming soon</span>
         </div>
 
         <div class="resource-card" onclick="window.open('https://github.com/MakeyDooey/Software/issues','_blank')">
-          <div class="resource-icon navy">🐛</div>
+          <div class="resource-icon navy">></div>
           <h3>Bug Reports & Issues</h3>
           <p>Found something wrong? Open an issue on GitHub. Include your browser version, OS, and steps to reproduce.</p>
-          <span class="resource-cta">Open an issue →</span>
+          <span class="resource-cta">Open an issue ></span>
         </div>
 
-        <div class="resource-card" onclick="showPage('contact')">
-          <div class="resource-icon green">✉️</div>
+        <div class="resource-card" data-page="contact">
+          <div class="resource-icon green">></div>
           <h3>Get in Touch</h3>
           <p>Have a question that isn't covered here? Reach out directly to the team via email or through GitHub.</p>
-          <span class="resource-cta">Contact us →</span>
+          <span class="resource-cta">Contact us ></span>
         </div>
 
       </div>
     </div>
   </div>
 
-  <!-- ═══ CONTACT PAGE ══════════════════════════════════════ -->
+  <!-- Contact Page -->
   <div class="page" id="page-contact">
 
     <div class="page-hero">
@@ -938,29 +317,29 @@
       <div class="contact-grid">
 
         <div class="contact-card">
-          <div class="contact-icon">✉️</div>
+          <div class="contact-icon">></div>
           <h3>General Inquiries</h3>
-          <p>For questions about orders, hardware specs, or anything else — email us directly.</p>
+          <p>For questions about orders, hardware specs, or anything else - email us directly.</p>
           <a href="mailto:ddmurphy@makeydooey.org" class="contact-link">
-            ddmurphy@makeydooey.org →
+            ddmurphy@makeydooey.org ->
           </a>
         </div>
 
         <div class="contact-card">
-          <div class="contact-icon">🐙</div>
+          <div class="contact-icon">></div>
           <h3>GitHub</h3>
           <p>Browse the source code, report bugs, or open a feature request on our public repository.</p>
           <a href="https://github.com/MakeyDooey/Software" target="_blank" class="contact-link">
-            github.com/MakeyDooey →
+            github.com/MakeyDooey ->
           </a>
         </div>
 
         <div class="contact-card">
-          <div class="contact-icon">🐛</div>
+          <div class="contact-icon">></div>
           <h3>Software Support</h3>
           <p>Issues with the PWA IDE, firmware flashing, or serial communication? Open a GitHub issue with your browser and OS details.</p>
           <a href="https://github.com/MakeyDooey/Software/issues" target="_blank" class="contact-link">
-            Open an issue →
+            Open an issue ->
           </a>
         </div>
 
@@ -968,7 +347,7 @@
     </div>
   </div>
 
-  <!-- ═══ FOOTER ════════════════════════════════════════════ -->
+  <!-- Footer -->
   <footer>
     <div class="footer-logo">
       <div class="nav-logo-icon">
@@ -982,14 +361,14 @@
       </div>
       MakeyDooey
     </div>
-    <p>Boston University ECE Senior Capstone · 2025–26</p>
-    <p>✉️ <a href="mailto:ddmurphy@makeydooey.org" style="color:var(--muted);">ddmurphy@makeydooey.org</a></p>
+    <p>Boston University ECE Senior Capstone · 2025-26</p>
+    <p>email <a href="mailto:ddmurphy@makeydooey.org" style="color:var(--muted);">ddmurphy@makeydooey.org</a></p>
   </footer>
 
-  <!-- ═══ PRE-ORDER MODAL ═══════════════════════════════════ -->
-  <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <!-- Pre-order Modal -->
+  <div class="modal-overlay" id="modal-overlay">
     <div class="modal" id="modal">
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-close">></button>
       <div id="modal-body-form">
         <h3 id="modal-title">Get notified</h3>
         <p>Leave your email and we'll reach out as soon as <strong id="modal-product-name"></strong> pricing and availability is confirmed.</p>
@@ -1001,112 +380,19 @@
           <label>Email address</label>
           <input type="email" id="modal-email" placeholder="ada@university.edu" />
         </div>
-        <button class="modal-submit" onclick="submitPreorder()">Notify me when available</button>
+        <button class="modal-submit">Notify me when available</button>
       </div>
       <div id="modal-body-success" class="modal-success" style="display:none;">
-        <div class="checkmark">✅</div>
+        <div class="checkmark">></div>
         <h3>You're on the list!</h3>
         <p style="color:var(--muted);font-size:0.9rem;line-height:1.6;">We'll email you as soon as pre-orders go live. In the meantime, check out the free PWA IDE.</p>
         <br/>
-        <button class="btn-preorder" onclick="window.open('https://makeydooey.github.io/Software','_blank')">Open the IDE →</button>
+        <button class="btn-preorder" onclick="window.open('https://makeydooey.github.io/Software','_blank')">Open the IDE ></button>
       </div>
     </div>
   </div>
 
-  <script>
-    // ── PAGE ROUTING ────────────────────────────────────────
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
-      document.getElementById('page-' + id).classList.add('active');
-      const navBtn = document.getElementById('nav-' + id);
-      if (navBtn) navBtn.classList.add('active');
-      window.scrollTo({ top: 0 });
-    }
-
-    // ── MODAL ───────────────────────────────────────────────
-    let currentProduct = '';
-    function openModal(product) {
-      currentProduct = product;
-      document.getElementById('modal-product-name').textContent = product;
-      document.getElementById('modal-title').textContent = 'Get notified — ' + product;
-      document.getElementById('modal-body-form').style.display = 'block';
-      document.getElementById('modal-body-success').style.display = 'none';
-      document.getElementById('modal-name').value = '';
-      document.getElementById('modal-email').value = '';
-      document.getElementById('modal-overlay').classList.add('open');
-    }
-    function closeModal() {
-      document.getElementById('modal-overlay').classList.remove('open');
-    }
-    function closeModalOutside(e) {
-      if (e.target === document.getElementById('modal-overlay')) closeModal();
-    }
-    function submitPreorder() {
-      const name = document.getElementById('modal-name').value.trim();
-      const email = document.getElementById('modal-email').value.trim();
-      if (!name || !email) { alert('Please fill in both fields.'); return; }
-      // In production: POST to a form endpoint (Formspree, Supabase, etc.)
-      document.getElementById('modal-body-form').style.display = 'none';
-      document.getElementById('modal-body-success').style.display = 'block';
-    }
-
-    // ── AI RECOMMENDER ──────────────────────────────────────
-    const HARDWARE_CONTEXT = `
-You are MakeyDooey's hardware recommendation AI. MakeyDooey is a modular embedded hardware platform.
-
-Our available boards:
-- Main Totem: STM32H755 Nucleo, dual-core 480MHz, FreeRTOS, UART bus host, command router for all other totems. Use for: any project needing a powerful central controller, PID control, real-time tasks, or communication hub.
-- Motor Totem: ESP32-S3, drives up to 5 NEMA17 stepper motors (TMC2209 with stallguard sensorless homing) plus DC motors (DRV8871). Use for: robotics, CNC, prosthetics, any project with motor control.
-- ShamanLink: Custom PCB with LPC55S69, provides USB-C to CMSIS-DAP bridge, SWD programming, and CAN bus between totems. Use for: any project that needs the full system connected to a computer for flashing/debugging.
-- PWA IDE: Free browser-based IDE (no install). Flash firmware, monitor serial, control hardware from Chrome or Edge.
-
-Recommend ONLY our boards above. Be specific about which boards are needed and why. Be concise — 3-5 sentences. Format as: first state the recommended boards in bold, then explain why each is needed. End with one encouraging sentence about what they can build.
-    `.trim();
-
-    async function getRecommendation() {
-      const input = document.getElementById('idea-input').value.trim();
-      if (!input) return;
-
-      const btn = document.getElementById('send-btn');
-      const responseDiv = document.getElementById('recommender-response');
-      const responseText = document.getElementById('response-text');
-
-      btn.disabled = true;
-      responseDiv.classList.add('visible');
-      responseText.innerHTML = `<div class="thinking">Thinking<span class="thinking-dots"><span></span><span></span><span></span></span></div>`;
-
-      try {
-        const res = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'claude-sonnet-4-20250514',
-            max_tokens: 1000,
-            system: HARDWARE_CONTEXT,
-            messages: [{ role: 'user', content: input }]
-          })
-        });
-        const data = await res.json();
-        const text = data.content?.[0]?.text || 'Sorry, could not generate a recommendation. Please try again.';
-
-        // Simple bold markdown → HTML
-        const formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        responseText.innerHTML = formatted;
-      } catch (err) {
-        responseText.innerHTML = 'Network error — please try again.';
-      } finally {
-        btn.disabled = false;
-      }
-    }
-
-    // Allow Enter+Shift for newline, Enter alone to submit
-    document.getElementById('idea-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        getRecommendation();
-      }
-    });
-  </script>
+  <!-- Modular JavaScript -->
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

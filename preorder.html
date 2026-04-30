@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pre-order - MakeyDooey</title>
+  <link rel="icon" type="image/png" href="assets/images/wike.png" />
+  
+  <!-- Preconnect to fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/navigation.css" />
+  <link rel="stylesheet" href="css/preorder.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <button class="nav-logo" onclick="window.location.href='index.html'">
+      <div class="nav-logo-icon">
+        <img src="assets/images/logo.png" alt="MakeyDooey" style="width:28px;height:28px;object-fit:contain;border-radius:6px;" />
+      </div>
+      MakeyDooey
+    </button>
+    <div class="nav-links">
+      <button onclick="window.location.href='index.html'">Home</button>
+      <button onclick="window.location.href='index.html#shop'">Shop</button>
+      <button onclick="window.location.href='index.html#resources'">Resources</button>
+      <button onclick="window.location.href='index.html#contact'">Contact</button>
+      <button class="nav-cta" onclick="window.location.href='preorder.html'">Pre-order</button>
+    </div>
+  </nav>
+
+  <!-- Pre-order Hero -->
+  <div class="preorder-hero">
+    <div class="preorder-hero-inner">
+      <h1>Reserve Your MakeyDooey</h1>
+      <p class="subtitle">Be the first to get your hands on the modular embedded hardware platform that's changing how we build.</p>
+    </div>
+  </div>
+
+  <!-- Pre-order Form -->
+  <div class="preorder-form-container">
+    <div class="preorder-form" id="preorder-form">
+      <div class="form-header">
+        <h2>Pre-order Form</h2>
+        <p>Fill out the form below to join our waitlist and get early access when pre-orders go live.</p>
+      </div>
+
+      <div class="form-error" id="form-error"></div>
+
+      <form id="preorder-form-element" class="form-grid" novalidate>
+        <!-- Personal Information -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="first-name">First Name</label>
+            <input type="text" id="first-name" name="firstName" class="form-input" />
+            <div class="input-error-message">Please enter your first name</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="lastName" class="form-input" />
+            <div class="input-error-message">Please enter your last name</div>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label class="form-label" for="email">Email Address <span class="required">*</span></label>
+          <input type="email" id="email" name="email" class="form-input" required />
+          <div class="input-error-message">Please enter a valid email address</div>
+        </div>
+
+        <!-- Project Information -->
+        <div class="form-group full-width">
+          <label class="form-label" for="project">What are you building? (Optional)</label>
+          <textarea id="project" name="project" class="form-textarea" placeholder="Tell us about your project and how you plan to use MakeyDooey..."></textarea>
+        </div>
+
+        <!-- Organization/Use Case -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="organization">Organization/Company (Optional)</label>
+            <input type="text" id="organization" name="organization" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="use-case">Use Case</label>
+            <select id="use-case" name="useCase" class="form-select">
+              <option value="">Select your use case</option>
+              <option value="Education">Education</option>
+              <option value="Research">Research</option>
+              <option value="Personal Projects">Personal Projects</option>
+              <option value="Commercial Product">Commercial Product</option>
+              <option value="Robotics Team">Robotics Team</option>
+              <option value="Prototyping">Prototyping</option>
+              <option value="Other">Other</option>
+            </select>
+            <div class="input-error-message">Please select a use case</div>
+          </div>
+        </div>
+
+        <!-- Terms and Privacy -->
+        <div class="form-group full-width">
+          <label class="checkbox-group">
+            <input type="checkbox" id="terms" name="terms" class="checkbox-input" />
+            <div class="checkbox-label">
+              I agree to the <a href="terms.html" onclick="window.open('terms.html', '_blank')" target="_blank">Terms of Service</a> and <a href="privacy.html" onclick="window.open('privacy.html', '_blank')" target="_blank">Privacy Policy</a>. I understand that this is a pre-order and I will be notified when pricing and availability are confirmed.
+            </div>
+          </label>
+        </div>
+
+        <div class="form-group full-width">
+          <label class="checkbox-group">
+            <input type="checkbox" id="newsletter" name="newsletter" class="checkbox-input" />
+            <div class="checkbox-label">
+              Send me updates about MakeyDooey products, features, and development progress.
+            </div>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group full-width">
+          <button type="submit" class="form-submit">Join Waitlist</button>
+        </div>
+      </form>
+
+      <!-- Success State -->
+      <div class="form-success" id="form-success" style="display: none;">
+        <div class="success-icon">></div>
+        <h3>You're on the list!</h3>
+        <p>Thank you for your interest in MakeyDooey. We'll email you as soon as pre-orders go live with pricing and availability information.</p>
+        <div class="success-actions">
+          <a href="index.html" class="btn-secondary">Back to Home</a>
+          <a href="https://makeydooey.github.io/Software" target="_blank" class="btn-secondary">Try the IDE</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 80 80" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+          <rect x="14" y="14" width="52" height="52" rx="10" fill="#EB7923"/>
+          <rect x="20" y="20" width="40" height="40" rx="7" fill="#2d0e4e"/>
+          <circle cx="40" cy="36" r="9" fill="#EB7923"/>
+          <circle cx="40" cy="36" r="5" fill="#2d0e4e"/>
+          <path d="M31 50 Q40 57 49 50" stroke="#EB7923" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      MakeyDooey
+    </div>
+    <p>Boston University ECE Senior Capstone · 2025-26</p>
+    <p>email <a href="mailto:ddmurphy@makeydooey.org" style="color:var(--muted);">ddmurphy@makeydooey.org</a></p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script type="module" src="js/preorder.js"></script>
+</body>
+</html>

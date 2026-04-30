@@ -1,0 +1,17 @@
+/* CSS Custom Properties (Variables) */
+:root {
+  --cream:      #F5F0E8;
+  --cream-dark: #EDE6D6;
+  --orange:     #E8622A;
+  --orange-dim: #C44E1E;
+  --aubergine:  #2D1B33;
+  --navy:       #1A1F3A;
+  --charcoal:   #2C2C2C;
+  --muted:      #7A6E62;
+  --border:     rgba(0,0,0,0.10);
+  --ff-head:    'Syne', sans-serif;
+  --ff-mono:    'DM Mono', monospace;
+  --ff-body:    'DM Sans', sans-serif;
+  --radius:     12px;
+  --nav-h:      64px;
+}
