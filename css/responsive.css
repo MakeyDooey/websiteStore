@@ -1,0 +1,54 @@
+/* Responsive Design */
+@media (max-width: 640px) {
+  nav { 
+    padding: 0 20px; 
+  }
+  
+  .nav-links button:not(.nav-cta) { 
+    display: none; 
+  }
+  
+  .hero { 
+    padding: 40px 20px 60px; 
+  }
+  
+  .hero-inner { 
+    grid-template-columns: 1fr; 
+    gap: 32px; 
+  }
+  
+  .hero-logo-col { 
+    flex-direction: row; 
+    justify-content: flex-start; 
+  }
+  
+  .hero-logo-col img { 
+    width: 80px; 
+    border-radius: 16px; 
+  }
+  
+  .recommender { 
+    padding: 24px; 
+  }
+  
+  .recommender-input-row { 
+    flex-direction: column; 
+  }
+  
+  .recommender-send { 
+    width: 100%; 
+    height: 48px; 
+  }
+  
+  .section { 
+    padding: 60px 20px; 
+  }
+  
+  .page-hero { 
+    padding: 60px 20px 40px; 
+  }
+  
+  footer { 
+    padding: 24px 20px; 
+  }
+}

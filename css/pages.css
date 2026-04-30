@@ -1,0 +1,126 @@
+/* Contact and Resources Page Styles */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.contact-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px;
+  transition: box-shadow 0.2s;
+}
+
+.contact-card:hover { 
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08); 
+}
+
+.contact-icon {
+  width: 48px; 
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(232,98,42,0.10);
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.contact-card h3 {
+  font-family: var(--ff-head);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.contact-card p { 
+  font-size: 0.85rem; 
+  color: var(--muted); 
+  line-height: 1.6; 
+}
+
+.contact-link {
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--orange);
+  transition: gap 0.15s;
+}
+
+.contact-link:hover { 
+  gap: 10px; 
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.resource-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.resource-card:hover {
+  box-shadow: 0 6px 32px rgba(0,0,0,0.09);
+  transform: translateY(-2px);
+}
+
+.resource-icon {
+  width: 52px; 
+  height: 52px;
+  border-radius: 14px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.resource-icon.orange { 
+  background: rgba(232,98,42,0.12); 
+}
+
+.resource-icon.navy { 
+  background: rgba(26,31,58,0.08); 
+}
+
+.resource-icon.green { 
+  background: rgba(34,139,34,0.08); 
+}
+
+.resource-card h3 {
+  font-family: var(--ff-head);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.resource-card p { 
+  font-size: 0.85rem; 
+  color: var(--muted); 
+  line-height: 1.65; 
+  flex: 1; 
+}
+
+.resource-cta {
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--orange);
+  margin-top: 4px;
+}

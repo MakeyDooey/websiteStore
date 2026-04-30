@@ -1,0 +1,26 @@
+<!-- Pre-order Modal Component -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal">
+    <button class="modal-close">></button>
+    <div id="modal-body-form">
+      <h3 id="modal-title">Get notified</h3>
+      <p>Leave your email and we'll reach out as soon as <strong id="modal-product-name"></strong> pricing and availability is confirmed.</p>
+      <div class="modal-field">
+        <label>Full name</label>
+        <input type="text" id="modal-name" placeholder="Ada Lovelace" />
+      </div>
+      <div class="modal-field">
+        <label>Email address</label>
+        <input type="email" id="modal-email" placeholder="ada@university.edu" />
+      </div>
+      <button class="modal-submit">Notify me when available</button>
+    </div>
+    <div id="modal-body-success" class="modal-success" style="display:none;">
+      <div class="checkmark">></div>
+      <h3>You're on the list!</h3>
+      <p style="color:var(--muted);font-size:0.9rem;line-height:1.6;">We'll email you as soon as pre-orders go live. In the meantime, check out the free PWA IDE.</p>
+      <br/>
+      <button class="btn-preorder" onclick="window.open('https://makeydooey.github.io/Software','_blank')">Open the IDE ></button>
+    </div>
+  </div>
+</div>

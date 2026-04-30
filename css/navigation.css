@@ -1,0 +1,76 @@
+/* Navigation Styles */
+nav {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  z-index: 100;
+  height: var(--nav-h);
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  padding: 0 40px;
+  background: rgba(245,240,232,0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--ff-head);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--charcoal);
+  display: flex; 
+  align-items: center; 
+  gap: 10px;
+}
+
+.nav-logo-icon {
+  background: rgba(235,121,35,0.12);
+  border: 1.5px solid rgba(235,121,35,0.2);
+  border-radius: 10px;
+  padding: 4px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+}
+
+.nav-links {
+  display: flex; 
+  align-items: center; 
+  gap: 8px;
+}
+
+.nav-links button {
+  font-family: var(--ff-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: var(--muted);
+  transition: color 0.15s, background 0.15s;
+}
+
+.nav-links button:hover { 
+  color: var(--charcoal); 
+  background: var(--cream-dark); 
+}
+
+.nav-links button.active { 
+  color: var(--orange); 
+  font-weight: 600; 
+}
+
+.nav-cta {
+  background: var(--orange) !important;
+  color: #fff !important;
+  padding: 8px 20px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  transition: background 0.15s !important;
+}
+
+.nav-cta:hover { 
+  background: var(--orange-dim) !important; 
+}

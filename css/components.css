@@ -1,0 +1,107 @@
+/* Common Component Styles */
+.page { 
+  display: none; 
+  padding-top: var(--nav-h); 
+  min-height: 100vh; 
+}
+
+.page.active { 
+  display: block; 
+}
+
+.section {
+  padding: 80px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-tag {
+  font-family: var(--ff-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 12px;
+}
+
+.section h2 {
+  font-family: var(--ff-head);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--charcoal);
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 520px;
+  margin-bottom: 48px;
+}
+
+hr.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* Steps Component */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.step {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+}
+
+.step-num {
+  font-family: var(--ff-mono);
+  font-size: 0.75rem;
+  color: var(--orange);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.step h3 {
+  font-family: var(--ff-head);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.step p { 
+  font-size: 0.875rem; 
+  color: var(--muted); 
+  line-height: 1.65; 
+}
+
+/* Page Hero */
+.page-hero {
+  padding: 80px 40px 40px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, var(--cream-dark), var(--cream));
+}
+
+.page-hero h1 {
+  font-family: var(--ff-head);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  max-width: 500px;
+  margin-bottom: 16px;
+}
+
+.page-hero p { 
+  color: var(--muted); 
+  max-width: 460px; 
+  line-height: 1.7; 
+  font-size: 0.95rem; 
+}
